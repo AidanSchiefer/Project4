@@ -30,9 +30,16 @@ void sendmsg (char *user, char *target, char *msg) {
 	// TODO:
 	// Send a request to the server to send the message (msg) to the target user (target)
 	// by creating the message structure and writing it to server's FIFO
+	/*
+	Okay, here we go:
+	To start, create the write end of the pipe here. The read will be used for the messageListener function
+	*/
 
-
-
+	struct message msgStructure;
+	// ----- Copy message attributes to the struct -----
+	strcpy(msgStructure.target, target);
+	strcpy(msgStructure.msg, msg);
+	strcpy(msgStructure.source, user);
 
 
 
