@@ -42,15 +42,15 @@ int main() {
 		// TODO:
 		// open target FIFO and write the whole message struct to the target FIFO
 		// close target FIFO after writing the message
-		// ----- Open the target (client) FIFO -----
+		
 		target = open(req.target, O_WRONLY);
-		// ----- Copy over all attributes from the request -----
+		
 		strcpy(resp.msg, req.msg);
 		strcpy(resp.target, req.target);
 		strcpy(resp.source, req.source);
-		// ----- Write the intended message to the target (client) FIFO -----
+		
 		write(target, &resp, sizeof(struct message));
-		// ----- Clost the target (client) FIFO -----
+		
 		close(target);
 	}
 	close(server);
