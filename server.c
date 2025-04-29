@@ -36,7 +36,6 @@ int main() {
 			continue;
 		}
 		// ----- Create a response struct -----
-		struct message resp;
 		printf("Received a request from %s to send the message %s to %s.\n",req.source,req.msg,req.target);
 
 		// TODO:
@@ -44,14 +43,10 @@ int main() {
 		// close target FIFO after writing the message
 		
 		target = open(req.target, O_WRONLY);
-		
-		strcpy(resp.msg, req.msg);
-		strcpy(resp.target, req.target);
-		strcpy(resp.source, req.source);
-		
-		write(target, &resp, sizeof(struct message));
-		
-		close(target);
+		if (target != -1){
+			write(target, &req, sizeof(struct(message)));
+			close(target);
+		}
 	}
 	close(server);
 	close(dummyfd);
