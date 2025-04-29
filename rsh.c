@@ -37,13 +37,13 @@ void sendmsg (char *user, char *target, char *msg) {
 	int writer;
 
 	struct message msgStructure;
-	// ----- Copy message attributes to the struct -----
+	
 	strcpy(msgStructure.target, target);
 	strcpy(msgStructure.msg, msg);
 	strcpy(msgStructure.source, user);
-	// ----- Open the writing end of the FIFO -----
+	
 	writer = open("serverFIFO", O_WRONLY);
-	// ----- Write to the Server FIFO -----
+	
 	write(writer, msgStructure.msg, sizeof(struct message));
 	close(writer);
 
@@ -60,10 +60,20 @@ void* messageListener(void *arg) {
 	// Incoming message from [source]: [message]
 	// put an end of line at the end of the message
 	char* userFIFOName = "userFIFO";
+	int user;
+	struct message userRead;
+	signal(SIGPIPE,SIG_IGN);
+	signal(SIGINT,terminate);
+	user = open(userFIFOName, O_WRONLY);
 
 	while(1){
-		printf("Incoming message from %s: %s", " ", " ");
+		if(read(user, &userRead, sizeof(struct message) != sizeof(struct message))){
+			continue;
+		}
+
+		printf("Incoming message from %s: %s\n", userRead.source, userRead.msg);
 	}
+	close(user);
 
 
 
@@ -101,7 +111,7 @@ int main(int argc, char **argv) {
 
 	pthread_t msgThreadId;
 
-	pthread_create(&msgThreadId, NULL, messageListener, NULL); // Creates the message listener thread
+	pthread_create(&msgThreadId, NULL, messageListener, NULL); 
 
 
 
@@ -139,9 +149,7 @@ int main(int argc, char **argv) {
 		// if no message is specified, you should print the followingA
  		// printf("sendmsg: you have to enter a message\n");
 
-		/*
-		Take the line2 variable and break it into its necessary pieces. 
-		*/
+		
 
 
 
