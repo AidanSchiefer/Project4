@@ -59,9 +59,11 @@ void* messageListener(void *arg) {
 	// following format
 	// Incoming message from [source]: [message]
 	// put an end of line at the end of the message
+	char* userFIFOName = "userFIFO";
 
-
-
+	while(1){
+		printf("Incoming message from %s: %s", " ", " ");
+	}
 
 
 
