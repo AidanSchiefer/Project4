@@ -224,7 +224,7 @@ int main(int argc, char **argv) {
 			printf("sendmsg: you have to enter a message\n");
 		}
 
-		char* target = strdup(commad[1]);
+		char* target = strdup(command[1]);
 		char* msg = strdup(command[2]);
 
 		sendmsg(uName, command[1], command[2]);
