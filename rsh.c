@@ -183,42 +183,6 @@ int main(int argc, char **argv) {
 
 		sendmsg(uName, args[1], newString);	
 		free(newString);
-	/*
-		int counter = 0;
-
-		command[2] = NULL;
-		while (cmdstr != NULL){
-			if (counter > 1){
-				if (command[2] == NULL){
-					command[2] = malloc(strlen(cmdstr) + 1);
-					strcpy(command[2], cmdstr);
-				}
-				else{
-					command[2] = realloc(command[2], strlen(cmdstr) + 2 + strlen(command[2]));
-					strcat(command[2], " ");
-					strcat(command[2], cmdstr);
-				}
-			}
-			else{
-				command[counter] = malloc(strlen(cmdstr) + 1);
-				strcpy(command[counter], cmdstr);
-			}
-			cmdstr = strtok(NULL, " ");
-			counter += 1;
-		}
-
-		if (command[1] == NULL){
-			printf("sendmsg: you have to specify target user\n");
-		}
-		else if (command[2] == NULL){
-			printf("sendmsg: you have to enter a message\n");
-		}
-
-		char* target = strdup(command[1]);
-		char* msg = strdup(command[2]);
-
-		sendmsg(uName, command[1], command[2]);
-		*/
 		continue;
 	}
 
