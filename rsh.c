@@ -136,6 +136,8 @@ int main(int argc, char **argv) {
 
 	char cmd[256];
 	char line2[256];
+	char* command[20];
+	char* cmdstr = malloc(strlen(line) + 1);
 	strcpy(line2,line);
 	strcpy(cmd,strtok(line," "));
 
@@ -157,6 +159,7 @@ int main(int argc, char **argv) {
 		// printf("sendmsg: you have to specify target user\n");
 		// if no message is specified, you should print the followingA
  		// printf("sendmsg: you have to enter a message\n");
+		/*
 		char* args[20] = {};
 		char* eachTokens = strtok(line2, " ");
 		int charNums = 0;
@@ -178,8 +181,8 @@ int main(int argc, char **argv) {
 			printf("sendmsg: you have to enter a message\n");
 			continue;
 		}
-		char* newString = (char*)malloc(sizeof(char) * 256);
-		memset(newString, 0, sizeof(char)*256);
+		char* newString = (char*)malloc(sizeof(char) * charNums);
+		memset(newString, 0, sizeof(char)*charNums);
 		for (int i = 2; i < charNums; i++){
 			strcat(newString, args[i]);
 			if (i == charNums - 1){
@@ -190,6 +193,41 @@ int main(int argc, char **argv) {
 
 		sendmsg(uName, args[1], newString);	
 		free(newString);
+		*/
+		int counter = 0;
+
+		command[2] = NULL;
+		while (cmdstr != NULL){
+			if (counter > 1){
+				if (command[2] == NULL){
+					command[2] = malloc(strlen(cmdstr) + 1);
+					strcpy(command[2], cmdstr);
+				}
+				else{
+					command[2] = realloc(command[2], strlen(cmdstr) + 2 + strlen(command[2]));
+					strcat(command[2], " ");
+					strcat(command[2], cmdstr);
+				}
+			}
+			else{
+				command[counter] = malloc(strlen(cmdstr) + 1);
+				strcpy(command[counter], cmdstr);
+			}
+			cmdstr = strtok(NULL, " ");
+			counter += 1;
+		}
+
+		if (command[1] == NULL){
+			printf("sendmsg: you have to specify target user\n");
+		}
+		else if (command[2] == NULL){
+			printf("sendmsg: you have to enter a message\n");
+		}
+
+		char* target = strdup(commad[1]);
+		char* msg = strdup(command[2]);
+
+		sendmsg(uName, command[1], command[2]);
 		continue;
 	}
 
