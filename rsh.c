@@ -182,7 +182,7 @@ int main(int argc, char **argv) {
 		memset(newString, 0, sizeof(char)*256);
 		for (int i = 2; i < charNums; i++){
 			strcat(newString, args[i]);
-			if (i == charNums - 2){
+			if (i == charNums - 1){
 				break;
 			}
 			strcat(newString, " ");
