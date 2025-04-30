@@ -32,7 +32,7 @@ int main() {
 		// TODO:
 		// read requests from serverFIFO
 
-		if (read(server, &req, sizeof(struct message) != sizeof(struct message))){
+		if (read(server, &req, sizeof(struct message)) != sizeof(struct message)){
 			continue;
 		}
 		// ----- Create a response struct -----
@@ -44,7 +44,7 @@ int main() {
 		
 		target = open(req.target, O_WRONLY);
 		if (target != -1){
-			write(target, &req, sizeof(struct(message)));
+			write(target, &req, sizeof(struct message));
 			close(target);
 		}
 	}
