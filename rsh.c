@@ -65,7 +65,7 @@ void* messageListener(void *arg) {
 	
 
 	while(1){
-		userFd = open(uName, O_WRONLY);
+		userFd = open(uName, O_RDONLY);
 		
 		if (userFd == -1){
 			perror("Failed to open user FIFO\n");
