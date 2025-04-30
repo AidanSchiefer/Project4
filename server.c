@@ -43,7 +43,7 @@ int main() {
 		// close target FIFO after writing the message
 		
 		target = open(req.target, O_WRONLY);
-		if (target != -1){
+		if (target >= 0){
 			write(target, &req, sizeof(struct message));
 			close(target);
 		}
