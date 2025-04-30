@@ -149,7 +149,7 @@ int main(int argc, char **argv) {
 		// printf("sendmsg: you have to specify target user\n");
 		// if no message is specified, you should print the followingA
  		// printf("sendmsg: you have to enter a message\n");
-		/*
+
 		char* args[20] = {};
 		char* eachTokens = strtok(line2, " ");
 		int charNums = 0;
@@ -183,7 +183,7 @@ int main(int argc, char **argv) {
 
 		sendmsg(uName, args[1], newString);	
 		free(newString);
-		*/
+	/*
 		int counter = 0;
 
 		command[2] = NULL;
@@ -218,6 +218,7 @@ int main(int argc, char **argv) {
 		char* msg = strdup(command[2]);
 
 		sendmsg(uName, command[1], command[2]);
+		*/
 		continue;
 	}
 
