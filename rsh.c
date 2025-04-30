@@ -34,17 +34,14 @@ void sendmsg (char *user, char *target, char *msg) {
 	Okay, here we go:
 	To start, create the write end of the pipe here. The read will be used for the messageListener function
 	*/
-	int writer;
-
 	struct message msgStructure;
-	
 	strcpy(msgStructure.target, target);
 	strcpy(msgStructure.msg, msg);
 	strcpy(msgStructure.source, user);
 	
-	writer = open("serverFIFO", O_WRONLY);
+	int writer = open("serverFIFO", O_WRONLY);
 	if (writer != -1){
-		write(writer, msgStructure.msg, sizeof(struct message));
+		write(writer, &msgStructure, sizeof(struct message));
 		close(writer);
 	}
 
@@ -59,25 +56,32 @@ void* messageListener(void *arg) {
 	// following format
 	// Incoming message from [source]: [message]
 	// put an end of line at the end of the message
-	char* userFIFOName[20];
-	strcpy(userFIFOName, uName);
-	int user;
+	//char* userFIFOName[20];
+	//strcpy(userFIFOName, uName);
+	int userFd;
 	struct message userRead;
 	signal(SIGPIPE,SIG_IGN);
 	signal(SIGINT,terminate);
 	
 
 	while(1){
-		user = open(userFIFOName, O_WRONLY);
+		userFd = open(uName, O_WRONLY);
+		
+		if (userFd == -1){
+			perror("Failed to open user FIFO\n");
+			sleep(1);
+			continue;
+		}
 
-		if(read(user, &userRead, sizeof(struct message) == sizeof(struct message))){
+		if(read(userFd, &userRead, sizeof(struct message) == sizeof(struct message))){
 			printf("Incoming message from %s: %s\n", userRead.source, userRead.msg);
 			fflush(stdout);
 		}
-		close(user);
+		close(userFd);
 
 	}
-	pthread_exit((void*)0);
+	//pthread_exit((void*)0);
+	pthread_exit(NULL);
 }
 
 int isAllowed(const char*cmd) {
