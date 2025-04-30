@@ -79,7 +79,7 @@ void* messageListener(void *arg) {
 		//}
 		if (read(userFd, &userRead, sizeof(struct message)) > 0){
 			printf("Incoming message from %s: %s\n", userRead.source, userRead.msg);
-			//fprintf(stderr, "rsh>");
+			fprintf(stderr, "rsh>");
 			fflush(stdout);
 		}
 		close(userFd);
