@@ -79,6 +79,7 @@ void* messageListener(void *arg) {
 		//}
 		if (read(userFd, &userRead, sizeof(struct message)) > 0){
 			printf("Incoming message from %s: %s\n", userRead.source, userRead.msg);
+			fprintf(stderr, "rsh>");
 			fflush(stdout);
 		}
 		close(userFd);
@@ -156,7 +157,7 @@ int main(int argc, char **argv) {
 		// printf("sendmsg: you have to specify target user\n");
 		// if no message is specified, you should print the followingA
  		// printf("sendmsg: you have to enter a message\n");
-		char* args[20] = {0};
+		char* args[20] = {};
 		char* eachTokens = strtok(line2, " ");
 		int charNums = 0;
 
@@ -186,7 +187,7 @@ int main(int argc, char **argv) {
 			strcat(newString, " ");
 		}
 
-		sendmsg(cmd, args[1], newString);	
+		sendmsg(uName, args[1], newString);	
 		free(newString);
 		continue;
 	}
