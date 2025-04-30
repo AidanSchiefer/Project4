@@ -73,7 +73,11 @@ void* messageListener(void *arg) {
 			continue;
 		}
 
-		if(read(userFd, &userRead, sizeof(struct message) == sizeof(struct message))){
+		//if(read(userFd, &userRead, sizeof(struct message) == sizeof(struct message))){
+		//	printf("Incoming message from %s: %s\n", userRead.source, userRead.msg);
+		//	fflush(stdout);
+		//}
+		while (read(userFd, &userRead, sizeof(struct message)) == sizeof(struct message)){
 			printf("Incoming message from %s: %s\n", userRead.source, userRead.msg);
 			fflush(stdout);
 		}
