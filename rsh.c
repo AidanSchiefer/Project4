@@ -40,10 +40,8 @@ void sendmsg (char *user, char *target, char *msg) {
 	strcpy(msgStructure.source, user);
 	
 	int writer = open("serverFIFO", O_WRONLY);
-	if (writer != -1){
-		write(writer, &msgStructure, sizeof(struct message));
-		close(writer);
-	}
+	write(writer, &msgStructure, sizeof(struct message));
+	close(writer);
 
 
 }
@@ -59,20 +57,13 @@ void* messageListener(void *arg) {
 	//char* userFIFOName[20];
 	//strcpy(userFIFOName, uName);
 	int userFd;
+	userFd = open(uName, O_RDONLY);
 	struct message userRead;
-	signal(SIGPIPE,SIG_IGN);
-	signal(SIGINT,terminate);
+	//signal(SIGPIPE,SIG_IGN);
+	//signal(SIGINT,terminate);
 	
 
 	while(1){
-		userFd = open(uName, O_RDONLY);
-		
-		if (userFd == -1){
-			perror("Failed to open user FIFO\n");
-			sleep(1);
-			continue;
-		}
-
 		//if(read(userFd, &userRead, sizeof(struct message) == sizeof(struct message))){
 		//	printf("Incoming message from %s: %s\n", userRead.source, userRead.msg);
 		//	fflush(stdout);
@@ -82,10 +73,10 @@ void* messageListener(void *arg) {
 			fprintf(stderr, "rsh>");
 			fflush(stdout);
 		}
-		close(userFd);
 
 	}
 	//pthread_exit((void*)0);
+	close(userFd);
 	pthread_exit(NULL);
 }
 
@@ -119,7 +110,6 @@ int main(int argc, char **argv) {
     // create the message listener thread
 
 	pthread_t msgThreadId;
-
 	pthread_create(&msgThreadId, NULL, messageListener, NULL); 
 
 
