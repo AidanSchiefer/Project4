@@ -179,6 +179,7 @@ int main(int argc, char **argv) {
 			continue;
 		}
 		char* newString = (char*)malloc(sizeof(char) * 256);
+		memset(newString, 0, sizeof(char)*256);
 		for (int i = 2; i < charNums; i++){
 			strcat(newString, args[i]);
 			if (i == charNums - 1){
